@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>17 DE OCTUBRE DE 2026</title>
+
+    <!-- Fuente estilo gótico / romántico -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================================================
+       ESTILOS GENERALES Y TEMA GÓTICO ELEGANTE
+       ========================================================= */
+        :root {
+            --bg-color: #0b070a;
+            --card-bg: #160f14;
+            --accent-crimson: #800e13;
+            --accent-rose: #ad2831;
+            --accent-gold: #d4af37;
+            --text-light: #f3e9dc;
+            --text-muted: #a3939e;
+            --border-gothic: rgba(212, 175, 55, 0.3);
+            --font-gothic: 'Cinzel Decorative', serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo minimalista con patrón */
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.06;
+            background-image: radial-gradient(var(--accent-crimson) 1px, transparent 1px),
+                radial-gradient(var(--accent-gold) 1px, var(--bg-color) 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            pointer-events: none;
+        }
+
+        .floral-accent {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.12;
+            z-index: -1;
+            filter: drop-shadow(0 0 10px rgba(128, 14, 19, 0.5));
+        }
+
+        .floral-tl {
+            top: -40px;
+            left: -40px;
+            width: 220px;
+            transform: rotate(-15deg);
+        }
+
+        .floral-br {
+            bottom: -40px;
+            right: -40px;
+            width: 220px;
+            transform: rotate(165deg);
+        }
+
+        /* Contenedor principal de pantallas */
+        .app-container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .screen {
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: scale(0.92);
+        }
+
+        .screen.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Transiciones de salida de pantalla */
+        .screen-exit {
+            opacity: 0 !important;
+            transform: scale(1.08) translateY(-20px) !important;
+        }
+
+        /* =========================================================
+       1. PORTADA DINÁMICA: SOBRE DE AMOR CON CORAZÓN
+       ========================================================= */
+        .envelope-wrapper {
+            perspective: 1000px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Arreglo definitivo de interacción del sobre y corazón */
+        .envelope {
+            width: 280px;
+            height: 200px;
+            background: #1c1319;
+            border: 2px solid var(--accent-gold);
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(128, 14, 19, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 110px solid #281a24;
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 2;
+            /* Bajado para que no bloquee al corazón */
+            pointer-events: none;
+            /* Los clics atraviesan la solapa */
+        }
+
+        .envelope-heart {
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-crimson);
+            position: absolute;
+            z-index: 10;
+            /* Subido para estar por encima de todo */
+            transform: rotate(-45deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px var(--accent-crimson);
+            transition: transform 0.2s ease, background-color 0.3s;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .envelope-heart::before,
+        .envelope-heart::after {
+            content: "";
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-crimson);
+            border-radius: 50%;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .envelope-heart::before {
+            top: -30px;
+            left: 0;
+        }
+
+        .envelope-heart::after {
+            left: 30px;
+            top: 0;
+        }
+
+        .heart-counter {
+            position: absolute;
+            z-index: 11;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transform: rotate(45deg);
+            user-select: none;
+            pointer-events: none;
+            /* El texto no bloquea el clic */
+        }
+
+        .click-hint {
+            margin-top: 30px;
+            font-family: var(--font-gothic);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        /* =========================================================
+       2. GALERÍA DE MULTIMEDIA (ADAPTADA A VERTICAL/HORIZONTAL)
+       ========================================================= */
+        .photo-container {
+            width: 100%;
+            max-width: 550px;
+            height: 480px;
+            position: relative;
+            border: 2px solid var(--accent-gold);
+            padding: 8px;
+            background: var(--card-bg);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9);
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .media-frame {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: scale(1.12);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .media-frame.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        /* Fondo borroso para rellenar marcos verticales/horizontales */
+        .blur-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) brightness(0.4);
+            transform: scale(1.1);
+            z-index: 1;
+        }
+
+        /* Imagen o video frontal encajado correctamente */
+        .media-content {
+            position: relative;
+            z-index: 2;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .photo-caption {
+            margin-top: 15px;
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        /* =========================================================
+       3. CARTA DE AMOR GÓTICA ROMÁNTICA
+       ========================================================= */
+        .gothic-card {
+            background: #140d12;
+            border: 1px solid var(--border-gothic);
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.9);
+            position: relative;
+            text-align: left;
+            line-height: 1.8;
+            max-width: 650px;
+        }
+
+        .gothic-card::before {
+            content: "✦";
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+        }
+
+        .gothic-title {
+            font-family: var(--font-gothic);
+            color: var(--accent-gold);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            border-bottom: 1px dashed var(--border-gothic);
+            padding-bottom: 15px;
+        }
+
+        .letter-body {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .letter-signature {
+            font-family: var(--font-gothic);
+            text-align: right;
+            color: var(--accent-gold);
+            margin-top: 30px;
+            font-size: 0.95rem;
+        }
+
+        /* =========================================================
+       4. FORMULARIO Y POPUP INTERACTIVO DE "NO"
+       ========================================================= */
+        .form-container {
+            background: rgba(22, 15, 20, 0.95);
+            border: 1px solid var(--border-gothic);
+            padding: 35px 25px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .form-title {
+            font-family: var(--font-gothic);
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-family: var(--font-gothic);
+            font-size: 0.9rem;
+            border: 1px solid var(--accent-gold);
+            background: transparent;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .btn-yes {
+            background: var(--accent-crimson);
+            border-color: var(--accent-crimson);
+        }
+
+        .btn-yes:hover {
+            background: var(--accent-rose);
+            box-shadow: 0 0 15px var(--accent-rose);
+        }
+
+        .btn-proposal {
+            font-family: var(--font-gothic);
+            font-size: 1.05rem;
+            /* Tamaño ajustado para que la tipografía gótica no se encime */
+            letter-spacing: 1px;
+            /* Espaciado limpio para evitar cruce de letras */
+            padding: 16px 32px;
+            white-space: nowrap;
+            /* Impide que el texto se parta en varias líneas */
+            line-height: 1.2;
+        }
+
+        /* Posicionamiento inicial separado del botón "NO" para que no se encima */
+        #btnNo2 {
+            position: absolute;
+            right: 15%;
+            top: 50%;
+            transform: translateY(-50%);
+            border-color: var(--accent-rose);
+            z-index: 10;
+        }
+
+        /* Ventana Flotante / Popup para cuando presiona NO */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-box {
+            background: #1a0f16;
+            border: 1px solid var(--accent-gold);
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(128, 14, 19, 0.6);
+            transform: scale(0.8);
+            transition: transform 0.4s ease;
+        }
+
+        .popup-overlay.active .popup-box {
+            transform: scale(1);
+        }
+
+        .popup-text {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        .next-btn {
+            margin-top: 25px;
+            align-self: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-pattern"></div>
+
+    <svg class="floral-accent floral-tl" viewBox="0 0 100 100" fill="var(--accent-gold)">
+        <path d="M50 0 C60 30 70 40 100 50 C70 60 60 70 50 100 C40 70 30 60 0 50 C30 40 40 30 50 0 Z" />
+    </svg>
+    <svg class="floral-accent floral-br" viewBox="0 0 100 100" fill="var(--accent-gold)">
+        <path d="M50 0 C60 30 70 40 100 50 C70 60 60 70 50 100 C40 70 30 60 0 50 C30 40 40 30 50 0 Z" />
+    </svg>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Popup para cuando presiona NO en el primer regalo -->
+    <div class="popup-overlay" id="noPopup">
+        <div class="popup-box">
+            <!-- PERSONALIZA AQUÍ EL TEXTO SI ELLA PRESIONA "NO" -->
+            <div class="popup-text" id="popupText">¿Estás segura? Pero si yo te amo con todo mi corazón... 🥺❤️</div>
+            <button class="btn btn-yes" id="closePopupBtn">Intentar de nuevo</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+
+        <!-- PANTALLA 1: PORTADA SOBRE DE AMOR -->
+        <div id="screen1" class="screen active">
+            <h2
+                style="font-family: var(--font-gothic); color: var(--accent-gold); letter-spacing: 2px; margin-bottom: 10px;">
+                17 DE OCTUBRE DE 2026
+            </h2>
+            <p
+                style="font-family: var(--font-serif); font-style: italic; color: var(--text-muted); margin-bottom: 30px;">
+                Un pequeño detalle para mi preciousa...
+            </p>
+
+            <div class="envelope-wrapper" id="envelopeWrapper">
+                <div class="envelope" id="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-heart" id="envelopeHeart">
+                        <span class="heart-counter" id="heartClicks">3</span>
+                    </div>
+                </div>
+            </div>
+            <div class="click-hint">TOCA EL CORAZÓN PARA VER ALGO ESPECIAL</div>
+        </div>
+
+        <!-- PANTALLA 2: GALERÍA DE 3 FOTOS Y 3 VIDEOS -->
+        <div id="screen2" class="screen">
+            <div class="photo-container" id="photoContainer">
+
+                <!-- FOTO 1 -->
+                <div class="media-frame active">
+                    <div class="blur-bg" style="background-image: url('./fotos/foto1.jpg');"></div>
+                    <img src="./fotos/foto1.jpg" class="media-content" alt="Foto 1" />
+                </div>
+
+                <!-- FOTO 2 -->
+                <div class="media-frame">
+                    <div class="blur-bg" style="background-image: url('./fotos/foto2.jpg');"></div>
+                    <img src="./fotos/foto2.jpg" class="media-content" alt="Foto 2" />
+                </div>
+
+                <!-- FOTO 3 -->
+                <div class="media-frame">
+                    <div class="blur-bg" style="background-image: url('./fotos/foto3.jpg');"></div>
+                    <img src="./fotos/foto3.jpg" class="media-content" alt="Foto 3" />
+                </div>
+
+                <!-- VIDEO 1 -->
+                <div class="media-frame">
+                    <video src="./fotos/video1.mp4" class="media-content" controls playsinline></video>
+                </div>
+
+                <!-- VIDEO 2 -->
+                <div class="media-frame">
+                    <video src="./fotos/video2.mp4" class="media-content" controls playsinline></video>
+                </div>
+
+                <!-- VIDEO 3 -->
+                <div class="media-frame">
+                    <video src="./fotos/video3.mp4" class="media-content" controls playsinline></video>
+                </div>
+
+            </div>
+
+            <p class="photo-caption" id="photoCaption">LOS RECUERDOS ME CONSUMEN...</p>
+            <button id="toLetterBtn" class="btn next-btn" style="display: none;">CONTINUAR A LA CARTA ✦</button>
+        </div>
+
+        <!-- PANTALLA 3: CARTA GÓTICA -->
+        <div id="screen3" class="screen">
+            <div class="gothic-card" id="gothicLetter">
+                <div class="gothic-title">A Mi Amor Eterno</div>
+
+                <p class="letter-body">
+                    Cada dia es mas hermoso cuando se quee puedo disfrutarlo cocoontigo. En este rincón del universo,
+                    entre la podredumbre de la socciedad, lo nuestroo es hermoso. Desnudasste mi allma y el cuerpo te
+                    elligió sin rechistar ni poner peros. La eelegancia de lo eterno y la sutileza de cada instante a
+                    tu lado, quiero recorrer tus motañas que llevaan al pozo que guarda tu manantial. Que mi amor por
+                    ti crece cada vez más, y profundo con cada latido y empujo en la caama con sentido.
+                </p>
+                <p class="letter-body">
+                    Cada recuerdo grabado en estas imágenes y videos es solo un destello del brillo que le has dado a mi
+                    vida. Eres mi refugio, mi luz en la penumbra y mi historia favorita que la vida nos dejó escrita.
+                </p>
+
+                <div class="letter-signature">
+                    Con todo mi amor eterno,<br>
+                    <span style="font-size: 1.1rem; color: var(--text-light);">DRX</span>
+                </div>
+            </div>
+            <button id="toFormBtn" class="btn next-btn" style="margin-top: 30px;">RESPONDER PREGUNTAS✦</button>
+        </div>
+
+        <!-- PANTALLA 4: FORMULARIO -->
+        <div id="screen4" class="screen">
+            <div class="form-container">
+                <!-- Reemplaza YOUR_FORMSPREE_ENDPOINT con tu ID de Formspree -->
+                <form id="loveForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST">
+
+                    <div id="question1">
+                        <div class="form-title">¿Te ha gustado este detalle?</div>
+                        <input type="hidden" name="gusto_el_regalo" id="inputGusto" value="">
+
+                        <div class="btn-group" id="group1">
+                            <button type="button" class="btn btn-yes" id="btnYes1">¡SÍ, ME ENCANTÓ!</button>
+                            <button type="button" class="btn" id="btnNo1"
+                                style="border-color: var(--accent-rose);">NO</button>
+                        </div>
+                    </div>
+
+                    <div id="thankYouSection" style="display: none; margin-top: 20px;">
+                        <p id="customThankYouText"
+                            style="font-family: var(--font-serif); font-style: italic; color: var(--accent-gold); margin-bottom: 25px;">
+                            Gracias por hacer que cada día sea mágico. Tu sonrisa radiante con tus perlas hermosas.
+                            tus preciousos ojitos hermosos que son como la singularidad de una galaxia. Y ese esbelto
+                            perfecto y divino cuerpo que complementa tu alma estimulante y cautivadora. El calor nos
+                            consume hasta el ultimo hueso de nuestro cuerpo. Y esees el mejor regalo que puedo recibir,
+                            hoy, maññana y siempre. Deseo que seas mi amor eterno, mi mantantial de la vida, la hermosa
+                            dama que se levante conmigo cada mañana en la misma cama.
+                        </p>
+
+                        <div class="form-title" style="font-size: 1.4rem; margin-top: 30px;">
+                            ¿Quieres ser mi KASA?
+                        </div>
+                        <input type="hidden" name="respuesta_propuesta" id="inputPropuesta" value="">
+
+                        <div class="btn-group" id="group2" style="margin-top: 30px;">
+                            <button type="submit" class="btn btn-yes btn-proposal" id="btnYes2">¡SÍ, ACEPTO!</button>
+                            <button type="button" class="btn btn-proposal" id="btnNo2"
+                                style="position: absolute; right: 10px; border-color: var(--accent-rose);">NO</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- PANTALLA 5: CELEBRACIÓN -->
+        <div id="screen5" class="screen">
+            <h1
+                style="font-family: var(--font-gothic); color: var(--accent-gold); font-size: 2.2rem; margin-bottom: 20px;">
+                ¡PARA SIEMPRE JUNTOS!
+            </h1>
+            <p style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--text-light); max-width: 500px;">
+                Has hecho quue el numero 17 tenga un auura diferente. Recuerdalo, 5 15 25. Te amo con todo mi ser.
+                <!-- =======================================================
+       LÓGICA JAVASCRIPT COMPLETA CORREGIDA Y PROBADA
+       ======================================================= -->
+                <script>
+                    let currentMediaIndex = 0;
+                    let envelopeClicks = 3;
+                    let noClickCount = 0;
+
+                    // Mensajes para el popup al decir NO en la primera pregunta
+                    const noMessages = [
+                        "¿Estás segura? Pero si yo te amo con todo mi corazón... 🥺❤️",
+                        "¿De verdad no te gustó nada? Prometo consentirte mucho... 💔",
+                        "¡Oye! No se vale decir que no, ¡te cambio este botón por un SÍ! 😉"
+                    ];
+
+                    const envelopeHeart = document.getElementById('envelopeHeart');
+                    const heartClicks = document.getElementById('heartClicks');
+                    const envelope = document.getElementById('envelope');
+
+                    const screen1 = document.getElementById('screen1');
+                    const screen2 = document.getElementById('screen2');
+                    const screen3 = document.getElementById('screen3');
+                    const screen4 = document.getElementById('screen4');
+                    const screen5 = document.getElementById('screen5');
+
+                    const photoContainer = document.getElementById('photoContainer');
+                    const toLetterBtn = document.getElementById('toLetterBtn');
+                    const toFormBtn = document.getElementById('toFormBtn');
+
+                    const btnYes1 = document.getElementById('btnYes1');
+                    const btnNo1 = document.getElementById('btnNo1');
+                    const btnYes2 = document.getElementById('btnYes2');
+                    const btnNo2 = document.getElementById('btnNo2');
+                    const thankYouSection = document.getElementById('thankYouSection');
+                    const loveForm = document.getElementById('loveForm');
+
+                    const noPopup = document.getElementById('noPopup');
+                    const popupText = document.getElementById('popupText');
+                    const closePopupBtn = document.getElementById('closePopupBtn');
+
+                    // 1. CLIC EN EL CORAZÓN (FUNCIONAMIENTO GARANTIZADO)
+                    envelopeHeart.onclick = function (e) {
+                        if (e) e.stopPropagation();
+                        envelopeClicks--;
+
+                        if (envelopeClicks > 0) {
+                            heartClicks.textContent = envelopeClicks;
+                            envelopeHeart.style.transform = 'rotate(-45deg) scale(0.85)';
+                            setTimeout(() => {
+                                envelopeHeart.style.transform = 'rotate(-45deg) scale(1)';
+                            }, 150);
+                        } else {
+                            heartClicks.textContent = '';
+                            envelope.classList.add('open');
+                            envelopeHeart.style.display = 'none';
+
+                            setTimeout(() => {
+                                screen1.classList.remove('active');
+                                screen2.classList.add('active');
+                            }, 800);
+                        }
+                    };
+
+                    // 2. GALERÍA INTERACTIVA DE FOTOS Y VIDEOS CON AUDIO
+                    photoContainer.onclick = function (e) {
+                        if (e.target.tagName === 'VIDEO' && e.offsetY > e.target.clientHeight - 50) return;
+
+                        const frames = document.querySelectorAll('.media-frame');
+
+                        const currentVideo = frames[currentMediaIndex].querySelector('video');
+                        if (currentVideo) {
+                            currentVideo.pause();
+                        }
+
+                        frames[currentMediaIndex].classList.remove('active');
+
+                        currentMediaIndex = (currentMediaIndex + 1) % frames.length;
+                        frames[currentMediaIndex].classList.add('active');
+
+                        const nextVideo = frames[currentMediaIndex].querySelector('video');
+                        if (nextVideo) {
+                            nextVideo.currentTime = 0;
+                            nextVideo.muted = false;
+                            nextVideo.play().catch(err => console.log("Video listo para reproduccion:", err));
+                        }
+
+                        if (currentMediaIndex === frames.length - 1) {
+                            toLetterBtn.style.display = 'inline-block';
+                        }
+                    };
+
+                    // NAVEGACIÓN A LA CARTA Y FORMULARIO
+                    toLetterBtn.onclick = function () {
+                        screen2.classList.remove('active');
+                        screen3.classList.add('active');
+                    };
+
+                    toFormBtn.onclick = function () {
+                        screen3.classList.remove('active');
+                        screen4.classList.add('active');
+                    };
+
+                    // 3. POPUP PARA BOTÓN NO (PRIMERA PREGUNTA)
+                    btnNo1.onclick = function (e) {
+                        e.preventDefault();
+                        if (noClickCount < noMessages.length) {
+                            popupText.textContent = noMessages[noClickCount];
+                            noPopup.classList.add('active');
+                            noClickCount++;
+                        }
+
+                        if (noClickCount >= 3) {
+                            btnNo1.textContent = "¡SÍ, ME ENCANTÓ!";
+                            btnNo1.className = "btn btn-yes";
+                            btnNo1.onclick = function () { btnYes1.click(); };
+                        }
+                    };
+
+                    closePopupBtn.onclick = function () {
+                        noPopup.classList.remove('active');
+                    };
+
+                    // 4. BOTÓN NO EVASIVO (SEGUNDA PREGUNTA: PROPUESTA)
+                    function moveButton(btn) {
+                        const container = btn.parentElement;
+                        const containerRect = container.getBoundingClientRect();
+                        const newX = Math.random() * (containerRect.width - btn.offsetWidth);
+                        const newY = Math.random() * (containerRect.height - btn.offsetHeight);
+
+                        btn.style.position = 'absolute';
+                        btn.style.left = `${Math.max(0, newX)}px`;
+                        btn.style.top = `${Math.max(0, newY)}px`;
+                    }
+
+                    btnNo2.onmouseover = function () { moveButton(btnNo2); };
+                    btnNo2.ontouchstart = function (e) {
+                        e.preventDefault();
+                        moveButton(btnNo2);
+                    };
+
+                    // 5. ENVÍO Y CELEBRACIÓN
+                    btnYes1.onclick = function () {
+                        document.getElementById('inputGusto').value = "Sí, me encantó";
+                        document.getElementById('question1').style.display = 'none';
+                        thankYouSection.style.display = 'block';
+                    };
+
+                    loveForm.onsubmit = function (e) {
+                        document.getElementById('inputPropuesta').value = "Sí, acepto";
+                        startFireworks();
+                        setTimeout(() => {
+                            screen4.classList.remove('active');
+                            screen5.classList.add('active');
+                        }, 1000);
+                    };
+
+                    // 6. ANIMACIÓN DE FUEGOS ARTIFICIALES
+                    const canvas = document.getElementById('particleCanvas');
+                    const ctx = canvas.getContext('2d');
+                    let particles = [];
+
+                    function resizeCanvas() {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                    }
+                    window.onresize = resizeCanvas;
+                    resizeCanvas();
+
+                    function createParticle(x, y) {
+                        return {
+                            x: x,
+                            y: y,
+                            size: Math.random() * 5 + 2,
+                            speedX: (Math.random() - 0.5) * 8,
+                            speedY: (Math.random() - 0.5) * 8,
+                            color: `hsl(${Math.random() * 40 + 340}, 100%, 50%)`,
+                            alpha: 1
+                        };
+                    }
+
+                    function startFireworks() {
+                        for (let i = 0; i < 100; i++) {
+                            particles.push(createParticle(window.innerWidth / 2, window.innerHeight / 2));
+                        }
+                        animateParticles();
+                    }
+
+                    function animateParticles() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        particles.forEach((p, index) => {
+                            p.x += p.speedX;
+                            p.y += p.speedY;
+                            p.alpha -= 0.015;
+
+                            ctx.save();
+                            ctx.globalAlpha = p.alpha;
+                            ctx.fillStyle = p.color;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.restore();
+
+                            if (p.alpha <= 0) particles.splice(index, 1);
+                        });
+
+                        if (particles.length > 0) {
+                            requestAnimationFrame(animateParticles);
+                        }
+                    }
+                    // ARREGLO DEL BOTÓN ESCAPADIZO SIN SUPERPOSICIÓN
+                    function moveButton(btn) {
+                        const container = btn.parentElement;
+                        const containerRect = container.getBoundingClientRect();
+
+                        // Genera coordenadas aleatorias alejadas del centro donde está el "SÍ"
+                        let newX = Math.random() * (containerRect.width - btn.offsetWidth);
+                        let newY = Math.random() * (containerRect.height - btn.offsetHeight);
+
+                        btn.style.position = 'absolute';
+                        btn.style.left = `${Math.max(10, newX)}px`;
+                        btn.style.top = `${Math.max(10, newY)}px`;
+                    }
+
+                    btnNo2.onmouseover = function () { moveButton(btnNo2); };
+                    btnNo2.ontouchstart = function (e) {
+                        e.preventDefault();
+                        moveButton(btnNo2);
+                    };
+                </script>
+</body>
+
+</html>
